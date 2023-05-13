@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.60.0.3035" />
     <PackageReference Include="MailKit" Version="4.0.0" />
   </ItemGroup>
 
