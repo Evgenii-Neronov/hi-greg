@@ -1,0 +1,27 @@
+## .NET ##
+*.dll
+*.exe
+*.pdb
+/bin/
+/obj/
+/out/
+*.userprefs
+project.lock.json
+.DS_Store
+.vs/
+.vscode/
+*.suo
+.cache/
+.NETTools/
+*.nuget.props
+*.nuget.targets
+*/bin/
+*/obj/
+*/out/
+.nupkg
+/TestResults/
+.coverage
+.vsconfig
+.msbuild*
+!**/Properties/PublishProfiles/
+``
