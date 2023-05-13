@@ -25,8 +25,7 @@ public class MessageHandler : IMessageHandler
                     new SubjectHeaderHandler(null)));
 
             foreach (var mParts in emailInfoResponse.Payload.Headers) headerHandler.Handle(mParts);
-
-            // Get the message body
+            
             var body = "";
             if (emailInfoResponse.Payload.Parts == null)
             {

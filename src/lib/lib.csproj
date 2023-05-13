@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Apis.Gmail.v1" Version="1.60.0.3035" />
     <PackageReference Include="MailKit" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0-preview.2.23128.3" />
   </ItemGroup>
 
 </Project>
