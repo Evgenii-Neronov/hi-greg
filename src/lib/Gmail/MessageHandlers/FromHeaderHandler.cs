@@ -8,10 +8,12 @@ public class FromHeaderHandler : HeaderHandler
     {
     }
 
-    public override void Handle(MessagePartHeader header)
+    public override string Handle(MessagePartHeader header)
     {
         if (header.Name == "From")
             Console.WriteLine("From: " + header.Value);
         else if (_successor != null) _successor.Handle(header);
+
+        return header.Value;
     }
 }

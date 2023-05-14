@@ -11,5 +11,5 @@ public abstract class HeaderHandler
         _successor = successor;
     }
 
-    public abstract void Handle(MessagePartHeader header);
+    public abstract string Handle(MessagePartHeader header);
 }

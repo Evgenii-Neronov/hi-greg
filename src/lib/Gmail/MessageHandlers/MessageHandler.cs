@@ -7,11 +7,14 @@ namespace lib.Gmail.MessageHandlers;
 public class MessageHandler : IMessageHandler
 {
     private readonly GmailService _service;
-
+    
     public MessageHandler(GmailService service)
     {
         _service = service;
     }
+
+    public string Subject { get; set; }
+    public string Body { get; set; }
 
     public void Handle(Message message)
     {
@@ -20,12 +23,15 @@ public class MessageHandler : IMessageHandler
 
         if (emailInfoResponse != null)
         {
-            var headerHandler = new DateHeaderHandler(
+            var headerHandler = new SubjectHeaderHandler(
                 new FromHeaderHandler(
-                    new SubjectHeaderHandler(null)));
-
-            foreach (var mParts in emailInfoResponse.Payload.Headers) headerHandler.Handle(mParts);
+                    new DateHeaderHandler(null)));
             
+            foreach (var mParts in emailInfoResponse.Payload.Headers)
+            {
+                Subject = headerHandler.Handle(mParts);
+            }
+
             var body = "";
             if (emailInfoResponse.Payload.Parts == null)
             {
@@ -38,6 +44,7 @@ public class MessageHandler : IMessageHandler
             }
 
             Console.WriteLine("Body: " + body);
+            Body = body;
         }
     }
 

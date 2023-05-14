@@ -6,9 +6,9 @@ namespace lib.Gmail.Credentials;
 
 public class CredentialFactory
 {
-    private static readonly string[] Scopes = { GmailService.Scope.GmailReadonly };
+    private static readonly string[] Scopes = { GmailService.Scope.GmailModify };
     private static readonly string UserName = "hi.greg.startup@gmail.com";
-    
+
     public UserCredential CreateDefault()
     {
         using var stream = new FileStream(AppSettings.CredentialPath, FileMode.Open, FileAccess.Read);
