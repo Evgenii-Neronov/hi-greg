@@ -1,2 +1,0 @@
-obj\Debug\net7.0\Protos/Cat.cs \
-obj\Debug\net7.0\Protos/CatGrpc.cs: Protos/cat.proto
