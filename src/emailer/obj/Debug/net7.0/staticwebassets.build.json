@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "dlN79M7qLqyp+dx2vC6afupWEvNm+C3UtJSfc28PBSw=",
+  "Source": "emailer",
+  "BasePath": "_content/emailer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

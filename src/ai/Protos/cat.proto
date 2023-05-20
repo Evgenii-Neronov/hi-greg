@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "ai";
+
+package greet;
+
+service Categorizer {
+	rpc Cat (CatEmailRequest) returns (CatEmailReplay);
+}
+
+message Category {
+	string name = 1;
+	string define= 2;
+}
+
+message CatEmailRequest {
+	string from = 1;
+	string to = 2;
+	string subject = 3;
+	string body = 4;
+	repeated Category categories = 5;
+}
+
+message CatEmailReplay {
+	string category = 1;
+}
