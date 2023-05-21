@@ -1,22 +1,27 @@
-﻿using Grpc.Core;
+﻿using ChatGpt.Application;
+using Grpc.Core;
 
 namespace ai.Services;
 
 public class CatService : Categorizer.CategorizerBase
 {
-    private readonly ILogger<GreeterService> _logger;
-    public CatService(ILogger<GreeterService> logger)
+    private readonly IGPT3Service _GPT3Service;
+    private readonly ILogger<CatService> _logger;
+    public CatService(ILogger<CatService> logger, IGPT3Service gpt3Service)
     {
         _logger = logger;
+        _GPT3Service = gpt3Service;
     }
 
-    public override Task<CatEmailReplay> Cat(CatEmailRequest request, ServerCallContext context)
+    public override async Task<CatEmailReplay> Cat(CatEmailRequest request, ServerCallContext context)
     {
         _logger.LogInformation("get cat");
 
-        return Task.FromResult(new CatEmailReplay
+        var category = await _GPT3Service.AskGPT3("which color have apples?");
+
+        return new CatEmailReplay
         {
-            Category = "test cat"
-        });
+            Category = category
+        };
     }
 }
