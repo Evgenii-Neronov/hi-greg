@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "crm_api";
+option csharp_namespace = "feature";
 
 package greet;
 

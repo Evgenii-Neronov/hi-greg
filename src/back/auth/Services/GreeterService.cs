@@ -1,7 +1,7 @@
 using Grpc.Core;
-using crm_api;
+using feature;
 
-namespace crm_api.Services;
+namespace feature.Services;
 
 public class GreeterService : Greeter.GreeterBase
 {
