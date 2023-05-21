@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Text;
 using Application.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
+using auth.Application.Helpers;
+using auth.Application.Models;
 
 namespace Controllers
 {
@@ -27,13 +25,23 @@ namespace Controllers
 
         [HttpPost("sign-up")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(User model)
+        public async Task<IActionResult> Register(SignUpRequest request)
         {
             if (ModelState.IsValid)
             {
-                model.UserId = Guid.NewGuid();
-                model.PasswordHash = _passwordHasher.HashPassword(model, model.PasswordHash);
-                _context.Add(model);
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+
+                if (user == null)
+                    return Conflict("Use another email");
+
+                user = new User()
+                {
+                    Email = request.Email,
+                    UserId = Guid.NewGuid()
+                };
+
+                user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
                 return Ok();
             }
@@ -43,29 +51,33 @@ namespace Controllers
 
         [HttpPost("sign-in")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(User model)
+        public async Task<IActionResult> Login(LogInRequest request)
         {
             if (ModelState.IsValid)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user != null && _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.PasswordHash) ==
-                    PasswordVerificationResult.Success)
-                {
-                    var (accessToken, refreshToken) = GenerateJwtTokens(user);
-                    
-                    user.RefreshToken = refreshToken;
-                    await _context.SaveChangesAsync();
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 
-                    return new ObjectResult(new
-                    {
-                        accessToken = accessToken,
-                        refreshToken = refreshToken
-                    });
-                }
-                else
+                if (user == null)
+                    return Conflict("User not found");
+
+                var verifyResult = _passwordHasher
+                    .VerifyHashedPassword(user,
+                        user.PasswordHash,
+                        request.Password);
+
+                if(verifyResult != PasswordVerificationResult.Success)
+                    return Conflict("Password invalid");
+                
+                var (accessToken, refreshToken) = user.GenerateJwtTokens(_configuration);
+
+                user.RefreshToken = refreshToken;
+                await _context.SaveChangesAsync();
+
+                return new ObjectResult(new
                 {
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                }
+                    accessToken = accessToken,
+                    refreshToken = refreshToken
+                });
             }
 
             return BadRequest(ModelState);
@@ -78,7 +90,7 @@ namespace Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
             if (user != null)
             {
-                var (newAccessToken, newRefreshToken) = GenerateJwtTokens(user);
+                var (newAccessToken, newRefreshToken) = user.GenerateJwtTokens(_configuration);
                 
                 user.RefreshToken = newRefreshToken;
                 await _context.SaveChangesAsync();
@@ -93,32 +105,6 @@ namespace Controllers
             {
                 return Unauthorized();
             }
-        }
-
-        private (string, string) GenerateJwtTokens(User user)
-        {
-            var jwtKey = _configuration.GetValue<string>("JwtKey");
-            var jwtExpireDays = _configuration.GetValue<int>("JwtExpireDays");
-            var jwtIssuer = _configuration.GetValue<string>("JwtIssuer");
-            
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(jwtKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email)
-                }),
-                Expires = DateTime.UtcNow.AddDays(jwtExpireDays),
-                SigningCredentials =
-                    new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = jwtIssuer
-            };
-            var accessToken = tokenHandler.CreateToken(tokenDescriptor);
-            
-            var refreshToken = Guid.NewGuid().ToString();
-            return (tokenHandler.WriteToken(accessToken), refreshToken);
         }
     }
 }

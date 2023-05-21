@@ -12,6 +12,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "YourAppName", Version = "v1" });
+});
+
 var jwtSettingsSection = configuration.GetSection("JwtSettings");
 var jwtKey = Environment.GetEnvironmentVariable("AUTH_KEY") ?? "MySecretKey123!";
 var jwtIssuer = jwtSettingsSection["Issuer"];
@@ -38,9 +43,11 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || true) // !
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourAppName v1"));
 }
 
 app.UseHttpsRedirection();
