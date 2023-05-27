@@ -46,7 +46,8 @@ namespace Controllers
 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return Ok();
+
+                return Ok(new SignUpResponse(user.UserId));
             }
 
             return BadRequest(ModelState);
@@ -76,11 +77,7 @@ namespace Controllers
                 user.RefreshToken = refreshToken;
                 await _context.SaveChangesAsync();
 
-                return new ObjectResult(new
-                {
-                    accessToken = accessToken,
-                    refreshToken = refreshToken
-                });
+                return Ok(new LogInResponse(user.UserId, accessToken, refreshToken));
             }
 
             return BadRequest(ModelState);

@@ -1,6 +1,3 @@
 ﻿namespace auth.Models;
 
-public class LogInResponse
-{
-    public Guid UserId { get; set; }
-}
+public record LogInResponse(Guid UserId, string AccessToken, string RefreshToken);
