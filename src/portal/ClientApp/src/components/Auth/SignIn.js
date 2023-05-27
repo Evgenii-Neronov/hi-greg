@@ -12,6 +12,11 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import { useAuth } from "./AuthProvider";
+
 
 function Copyright(props) {
     return (
@@ -29,13 +34,38 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-    const handleSubmit = (event) => {
+    const auth = useAuth();
+    const navigate = useNavigate();
+    const { currentUser } = useAuth();
+
+    if (currentUser) {
+         navigate('/');
+    }
+
+    const [error, setError] = useState(null);
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+
+        const formData = {
             email: data.get('email'),
             password: data.get('password'),
-        });
+        };
+
+        try {
+            const response = await axios.post('https://localhost:44439/api/Account/sign-in', formData);
+            console.log(response.data);
+
+            if (response.status === 200) {
+                auth.signIn(response.accessToken, response.refreshToken);
+                navigate('/');
+            } else {
+                setError('An error occurred during registration. Please try again.');
+            }
+        } catch (error) {
+            setError(error.response?.data || 'An error occurred while sending the request. Please try again.');
+            console.error(error);
+        }
     };
 
     return (
@@ -93,6 +123,11 @@ export function SignInSide() {
                                 id="password"
                                 autoComplete="current-password"
                             />
+                            {error && (
+                                <Typography variant="body2" color="error" align="right">
+                                    You can't sign in. {error}
+                                </Typography>
+                            )}
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"

@@ -4,6 +4,7 @@ import AppRoutes from "./AppRoutes";
 import { Layout } from "./components/Layouts/Layout";
 import { LayoutVoid } from "./components/Layouts/LayoutVoid";
 import { LayoutAdmin } from "./components/Layouts/LayoutAdmin";
+import { AuthProvider } from "./components/Auth/AuthProvider";
 import "./custom.css";
 
 export default class App extends Component {
@@ -11,6 +12,7 @@ export default class App extends Component {
 
     render() {
         return (
+            <AuthProvider>
             <Routes>
             {AppRoutes.map((route, index) => {
             const { element, layout: LayoutComponent, ...rest } = route;
@@ -24,7 +26,8 @@ export default class App extends Component {
         />
     );
 })}
-</Routes>
+                </Routes>
+        </AuthProvider>
 );
 }
 }

@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "./AuthProvider";
 
 function Copyright(props) {
     return (
@@ -29,13 +33,36 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export function SignUp() {
-    const handleSubmit = (event) => {
+    const auth = useAuth();
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const { currentUser } = useAuth();
+
+    if (currentUser) { navigate('/'); }
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+
+        const formData = {
             email: data.get('email'),
             password: data.get('password'),
-        });
+        };
+
+        try {
+            const response = await axios.post('https://localhost:44439/api/Account/sign-up', formData);
+            console.log(response.data); 
+            
+            if (response.status === 200) {
+                auth.signIn(response.accessToken, response.refreshToken);
+                navigate('/');
+            } else {
+                setError('An error occurred during registration. Please try again.');
+            }
+        } catch (error) {
+            setError(error.response?.data || 'An error occurred while sending the request. Please try again.');
+            console.error(error);
+        }
     };
 
     return (
@@ -100,6 +127,13 @@ export function SignUp() {
                                     autoComplete="new-password"
                                 />
                             </Grid>
+                            {error && (
+                             <Grid item xs={12}>
+                                <Typography variant="body2" color="error" align="right">
+                                You can't sign up. {error}
+                             </Typography>
+                             </Grid>
+                            )}
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -117,7 +151,7 @@ export function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/sign-in" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>

@@ -32,7 +32,7 @@ namespace Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 
                 if (user != null)
-                    return Conflict("Use another email");
+                    return Conflict("This email has already been used.");
 
                 user = new User()
                 {
@@ -47,7 +47,7 @@ namespace Controllers
                 _context.Add(user);
                 await _context.SaveChangesAsync();
 
-                return Ok(new SignUpResponse(user.UserId));
+                return Ok(new SignUpResponse(user.UserId, accessToken, refreshToken));
             }
 
             return BadRequest(ModelState);

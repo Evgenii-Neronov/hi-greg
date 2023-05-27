@@ -19,6 +19,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.5" />
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
   </ItemGroup>
 
