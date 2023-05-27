@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Route, Routes } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
-import { Layout } from "./components/Layout";
-import { LayoutVoid } from "./components/LayoutVoid";
+import { Layout } from "./components/Layouts/Layout";
+import { LayoutVoid } from "./components/Layouts/LayoutVoid";
+import { LayoutAdmin } from "./components/Layouts/LayoutAdmin";
 import "./custom.css";
 
 export default class App extends Component {

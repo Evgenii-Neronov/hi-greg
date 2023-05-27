@@ -4,14 +4,15 @@ import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import { SignInSide } from "./components/Auth/SignIn";
 import { SignUp } from "./components/Auth/SignUp";
-import { Layout } from "./components/Layout";
-import { LayoutVoid } from "./components/LayoutVoid";
+import { Layout } from "./components/Layouts/Layout";
+import { LayoutVoid } from "./components/Layouts/LayoutVoid";
+import { LayoutAdmin } from "./components/Layouts/LayoutAdmin";
 
 const AppRoutes = [
     {
         index: true,
         element: <Home />,
-        layout: Layout
+        layout: LayoutAdmin
     },
     {
         path: "/counter",
