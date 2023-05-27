@@ -16,9 +16,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            {'Copyright Â© '}
+            <Link color="inherit" href="http://neu-api.tech/">
+                neu api
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
