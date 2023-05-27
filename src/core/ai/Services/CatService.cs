@@ -17,7 +17,7 @@ public class CatService : Categorizer.CategorizerBase
     {
         _logger.LogInformation("get cat");
 
-        var category = await _GPT3Service.AskGPT3("which color have apples?");
+        var category = await _GPT3Service.AskGPT3(request.Subject);
 
         return new CatEmailReplay
         {

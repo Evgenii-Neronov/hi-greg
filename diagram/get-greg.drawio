@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-05-20T16:36:41.589Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="phhc2qJBD8591RLmAbeA" compressed="false" version="21.2.8" type="device">
+<mxfile host="Electron" modified="2023-05-21T07:23:20.340Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="oMrgewGwOdMM--RgCs1v" compressed="false" version="21.2.8" type="device">
   <diagram name="Page-1" id="eSH_kngfNYyGtqiUAU6l">
-    <mxGraphModel dx="2621" dy="1452" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2348" dy="1294" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -57,7 +57,7 @@
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-65" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-67" vertex="1">
           <mxGeometry y="24" width="120" height="156" as="geometry" />
         </mxCell>
-        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-66" value="Auth mcs" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-67" vertex="1">
+        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-66" value="Auth lib" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-67" vertex="1">
           <mxGeometry width="120" height="24" as="geometry" />
         </mxCell>
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-75" value="" style="group;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-67" vertex="1" connectable="0">
@@ -90,7 +90,7 @@
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-49" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-84" vertex="1">
           <mxGeometry y="11.578947368421053" width="200" height="98.42105263157896" as="geometry" />
         </mxCell>
-        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-50" value="CRM UI" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-84" vertex="1">
+        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-50" value="Portal UI" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-84" vertex="1">
           <mxGeometry width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-88" value="&lt;h1&gt;Crm UI&lt;/h1&gt;&lt;p&gt;1) UI for customers&lt;br&gt;2) Auth page for sign up and sing in&lt;br&gt;3) Page for activate and see own features&lt;br&gt;4) Monitoring status tasks of features&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;labelBackgroundColor=none;" parent="1" vertex="1">
@@ -102,6 +102,11 @@
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-92" value="" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-91" vertex="1">
           <mxGeometry y="16.842105263157897" width="200" height="143.15789473684214" as="geometry" />
         </mxCell>
+        <mxCell id="meOhQuVPaDZauPGkaOPM-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="uR5h2Ec_g3wLGEOiE3Os-91" source="uR5h2Ec_g3wLGEOiE3Os-93">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="321.4000244140625" y="39.00006103515625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-93" value="CRM back-end" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-91" vertex="1">
           <mxGeometry width="200" height="43.63636363636364" as="geometry" />
         </mxCell>
@@ -111,23 +116,11 @@
             <mxPoint x="489.5" y="350" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-97" value="&lt;font color=&quot;#33ffff&quot;&gt;gRpc&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;" parent="1" vertex="1">
+        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-97" value="&lt;font color=&quot;#33ffff&quot;&gt;http&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;" parent="1" vertex="1">
           <mxGeometry x="490" y="351.5" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-99" value="&lt;h1&gt;Crm back&lt;/h1&gt;&lt;p&gt;1) Auth user via credential (jwt-token)&lt;br&gt;2) Store customer features&#39;s settings&lt;br&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;labelBackgroundColor=none;" parent="1" vertex="1">
           <mxGeometry x="-305" y="460" width="240" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-104" value="" style="group;labelBackgroundColor=none;" parent="1" vertex="1" connectable="0">
-          <mxGeometry x="590" y="496" width="130" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-94" value="" style="endArrow=classic;html=1;rounded=0;labelBackgroundColor=none;fontColor=default;" parent="uR5h2Ec_g3wLGEOiE3Os-104" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint y="30" as="sourcePoint" />
-            <mxPoint x="130" y="30" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="uR5h2Ec_g3wLGEOiE3Os-95" value="&lt;font color=&quot;#33ffff&quot;&gt;gRpc&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;" parent="uR5h2Ec_g3wLGEOiE3Os-104" vertex="1">
-          <mxGeometry x="35" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="uR5h2Ec_g3wLGEOiE3Os-126" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=none;fontColor=default;" parent="1" source="uR5h2Ec_g3wLGEOiE3Os-116" target="uR5h2Ec_g3wLGEOiE3Os-117" edge="1">
           <mxGeometry relative="1" as="geometry" />

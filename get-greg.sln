@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{33A66B04-C0EC-44B4-B8A5-3AB581539338}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "portal", "src\portal\portal.csproj", "{99E8DCDC-EAC4-4035-B5AC-53E2814A8A88}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{176838A9-3937-4FD1-8A0B-9A4FA3A1B22E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ai", "src\core\ai\ai.csproj", "{95A617E5-9B6C-44DA-996B-0E10AA3BC406}"
@@ -33,16 +31,32 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "common", "src\lib\common\co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "auth", "src\back\auth\auth.csproj", "{9AF7FA48-D337-4251-9227-69B35DE19F07}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "portal", "src\portal\portal.csproj", "{05C76823-29DD-4BB2-A451-97CE20A24197}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{12052B0F-5F77-4204-B5DC-764484431B70}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B668F210-C803-4395-924C-2F9398FA3294}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\add-projects-to-sln.ps1 = scripts\add-projects-to-sln.ps1
+		scripts\add-refs.ps1 = scripts\add-refs.ps1
+		scripts\clean-up-dockers.ps1 = scripts\clean-up-dockers.ps1
+		scripts\clear.ps1 = scripts\clear.ps1
+		scripts\create-projects.ps1 = scripts\create-projects.ps1
+		scripts\dalai-ubuntu-scripts.txt = scripts\dalai-ubuntu-scripts.txt
+		scripts\delete comments.ps1 = scripts\delete comments.ps1
+		scripts\install-env.ps1 = scripts\install-env.ps1
+		scripts\New Text Document.txt = scripts\New Text Document.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{99E8DCDC-EAC4-4035-B5AC-53E2814A8A88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99E8DCDC-EAC4-4035-B5AC-53E2814A8A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99E8DCDC-EAC4-4035-B5AC-53E2814A8A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99E8DCDC-EAC4-4035-B5AC-53E2814A8A88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{95A617E5-9B6C-44DA-996B-0E10AA3BC406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95A617E5-9B6C-44DA-996B-0E10AA3BC406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95A617E5-9B6C-44DA-996B-0E10AA3BC406}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,12 +93,15 @@ Global
 		{9AF7FA48-D337-4251-9227-69B35DE19F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AF7FA48-D337-4251-9227-69B35DE19F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AF7FA48-D337-4251-9227-69B35DE19F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C76823-29DD-4BB2-A451-97CE20A24197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C76823-29DD-4BB2-A451-97CE20A24197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C76823-29DD-4BB2-A451-97CE20A24197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C76823-29DD-4BB2-A451-97CE20A24197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{99E8DCDC-EAC4-4035-B5AC-53E2814A8A88} = {33A66B04-C0EC-44B4-B8A5-3AB581539338}
 		{176838A9-3937-4FD1-8A0B-9A4FA3A1B22E} = {33A66B04-C0EC-44B4-B8A5-3AB581539338}
 		{95A617E5-9B6C-44DA-996B-0E10AA3BC406} = {176838A9-3937-4FD1-8A0B-9A4FA3A1B22E}
 		{1FBCF6F0-3A21-464C-B59D-B5551E5CBB9E} = {33A66B04-C0EC-44B4-B8A5-3AB581539338}
@@ -97,7 +114,9 @@ Global
 		{0F21EAE6-0F1F-400C-AC12-34ADF91C6003} = {33A66B04-C0EC-44B4-B8A5-3AB581539338}
 		{3F2EED32-BB4F-4E1F-AA30-399257961E28} = {0F21EAE6-0F1F-400C-AC12-34ADF91C6003}
 		{225142A7-B5FC-4039-B451-96E7EEA4FFE8} = {0F21EAE6-0F1F-400C-AC12-34ADF91C6003}
-		{9AF7FA48-D337-4251-9227-69B35DE19F07} = {576801E9-AF4D-44D6-A9E4-24C14EBD9DD4}
+		{9AF7FA48-D337-4251-9227-69B35DE19F07} = {0F21EAE6-0F1F-400C-AC12-34ADF91C6003}
+		{05C76823-29DD-4BB2-A451-97CE20A24197} = {33A66B04-C0EC-44B4-B8A5-3AB581539338}
+		{B668F210-C803-4395-924C-2F9398FA3294} = {12052B0F-5F77-4204-B5DC-764484431B70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5C345B6-8E0F-4245-A4E9-9555FD9C317A}
