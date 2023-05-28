@@ -6,6 +6,8 @@ namespace auth.Models
     {
         [Key]
         public Guid UserId { get; set; }
+        public string Forename { get; set; }
+        public string Surname { get; set; }
 
         [Required]
         [EmailAddress]

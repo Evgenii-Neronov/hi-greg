@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             try {
-                const response = await axios.post('/api/Account/refresh-token', null, {
+                const response = await axios.post('/api/auth/refresh-token', null, {
                     headers: {
                         'Accept': '*/*',
                     },
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         }, []);
 
         return (
-        <AuthContext.Provider value={{ currentUser, signIn, signOut }}>
+            <AuthContext.Provider value={{ currentUser, signIn, signOut, refresh }}>
     {children}
     </AuthContext.Provider>
 );

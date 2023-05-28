@@ -7,7 +7,6 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useAuth } from "../Auth/AuthProvider";
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Refresh } from "../Auth/Refresh"
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 
@@ -22,26 +21,20 @@ export const LayoutAdmin = () => {
     useEffect(() => {
         async function fetchRefreshToken() {
             try {
-                await currentUser.refresh();
+                var res = await currentUser.refresh();
 
-                if (!currentUser) {
+                if (!res.isSuccess) {
                     navigate('/sign-in');
                 }
             } catch (error) {
                 console.error(error);
+                navigate('/sign-in');
             }
         }
 
         fetchRefreshToken();
     }, []);
-
-    //const {isSuccess, accessToken, refreshToken} = await Refresh();
     
-    /*
-    if (!currentUser) {
-        return (<Navigate to="/sign-in" />);
-    }*/
-
     const theme = createTheme({
         palette: {
             mode: darkMode ? 'dark' : 'light',

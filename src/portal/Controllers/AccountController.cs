@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using portal.Models;
 
 namespace Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth/")]
     public class AccountController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -37,6 +38,8 @@ namespace Controllers
                 user = new User()
                 {
                     Email = request.Email,
+                    Surname = request.Surname,
+                    Forename = request.Forename,
                     UserId = Guid.NewGuid()
                 };
 
@@ -115,10 +118,10 @@ namespace Controllers
 
             var user = _context.Users.Find(userId);
 
-            return new ObjectResult(new
-            {
-                email = user.Email
-            });
+            if (user == null)
+                return Conflict("User not found");
+
+            return Ok(new MeResponse(user.Forename, user.Surname, user.Email));
         }
     }
 }

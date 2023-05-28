@@ -48,7 +48,7 @@ export function SignInSide() {
         };
 
         try {
-            const response = await axios.post('/api/Account/sign-in', formData);
+            const response = await axios.post('/api/auth/sign-in', formData);
             console.log(response.data);
 
             if (response.status === 200) {

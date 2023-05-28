@@ -33,6 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ClientApp\src\components\Auth\Me.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\back\auth\auth.csproj" />
     <ProjectReference Include="..\lib\common\common.csproj" />
   </ItemGroup>

@@ -30,6 +30,7 @@ function Copyright(props) {
     );
 }
 
+
 const defaultTheme = createTheme();
 
 export function SignUp() {
@@ -37,17 +38,49 @@ export function SignUp() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const validateEmail = (email) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    };
+
+    const validateName = (name) => {
+        const namePattern = /^[a-zA-Z\s]+$/;
+        return namePattern.test(name);
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        
+        if (!validateEmail(data.get('email'))) {
+            setError('Email is not valid.');
+            return;
+        }
+
+        if (!validateName(data.get('forename'))) {
+            setError('Name is not valid.');
+            return;
+        }
+
+        if (!validateName(data.get('surname'))) {
+            setError('Last Name is not valid.');
+            return;
+        }
+
+        if (data.get('password') != data.get('repeat_password')) {
+            setError('Passwords mismatch.');
+            return;
+        }
 
         const formData = {
             email: data.get('email'),
             password: data.get('password'),
+            forename: data.get('forename'),
+            surname: data.get('surname'),
         };
 
         try {
-            const response = await axios.post('/api/Account/sign-up', formData);
+            const response = await axios.post('/api/auth/sign-up', formData);
             console.log(response.data); 
             
             if (response.status === 200) {
@@ -85,22 +118,28 @@ export function SignUp() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    name="forename"
                                     required
                                     fullWidth
-                                    id="firstName"
+                                    id="forename"
                                     label="First Name"
                                     autoFocus
+                                    inputProps={{
+                                        maxLength: 30,
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     required
                                     fullWidth
-                                    id="lastName"
+                                    id="surname"
                                     label="Last Name"
-                                    name="lastName"
+                                    name="surname"
                                     autoComplete="family-name"
+                                    inputProps={{
+                                        maxLength: 30,
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -111,6 +150,9 @@ export function SignUp() {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    inputProps={{
+                                        maxLength: 40,
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -122,21 +164,32 @@ export function SignUp() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                    inputProps={{
+                                        maxLength: 45,
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="repeat_password"
+                                    label="Repeat password"
+                                    type="password"
+                                    id="repeat_password"
+                                    autoComplete="repeat-password"
+                                    inputProps={{
+                                        maxLength: 45,
+                                    }}
                                 />
                             </Grid>
                             {error && (
-                             <Grid item xs={12}>
-                                <Typography variant="body2" color="error" align="right">
-                                You can't sign up. {error}
-                             </Typography>
-                             </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="body2" color="error" align="right">
+                                        You can't sign up. {error}
+                                    </Typography>
+                                </Grid>
                             )}
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid>
                         </Grid>
                         <Button
                             type="submit"
