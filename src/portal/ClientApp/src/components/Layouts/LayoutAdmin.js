@@ -8,6 +8,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useAuth } from "../Auth/AuthProvider";
 import { Navigate, useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Me from "../Auth/Me"
 
 
 const drawerWidth = 240;
@@ -81,6 +82,9 @@ export const LayoutAdmin = () => {
                         <Button color="inherit" onClick={handleThemeChange}>
                             {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
                         </Button>
+                        <Box sx={{ marginLeft: 'auto', display: 'flex', marginTop: 'auto' }}>
+                            <Me />
+                        </Box>
                     </Toolbar>
                 </AppBar>
                 <Drawer

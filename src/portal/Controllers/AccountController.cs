@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using portal.Models;
+using System.Security.Claims;
 
 namespace Controllers
 {
@@ -114,7 +115,7 @@ namespace Controllers
         [Authorize]
         public async Task<IActionResult> Me()
         {
-            var userId = Guid.Parse(User.Identity.Name);
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             var user = _context.Users.Find(userId);
 
