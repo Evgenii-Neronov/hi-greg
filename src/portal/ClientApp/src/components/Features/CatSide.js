@@ -2,7 +2,6 @@
 import { Button, TextField, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Paper, Grid, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const CategoryForms = () => {
     const [categories, setCategories] = useState([]);
@@ -32,7 +31,7 @@ const CategoryForms = () => {
                 cats.map(cat => `&cats=${encodeURIComponent(cat)}`).join('');
 
             const response = await axios.get(`/api/cat?${queryString}`, {
-                headers: { Authorization: `Bearer ${Cookies.get('access_token')}` }
+                headers: { Authorization: `Bearer ${localStorage.getItem('refresh_token')}` }
             });
             
             const check = {
@@ -102,14 +101,14 @@ const CategoryForms = () => {
 
                 <Box sx={{ flexBasis: '50%' }}>
                     <Paper sx={{ p: 2, bgcolor: '#333366', color: '#fff' }}>
-                        <Typography variant="h6">Результаты проверок</Typography>
+                        <Typography variant="h6">History</Typography>
                         <TableContainer>
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Дата и время</TableCell>
-                                        <TableCell>Текст</TableCell>
-                                        <TableCell>Результат</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Text</TableCell>
+                                        <TableCell>Result</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
