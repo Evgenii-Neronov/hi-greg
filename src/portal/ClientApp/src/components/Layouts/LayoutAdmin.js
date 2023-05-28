@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, AppBar, Toolbar, IconButton, Typography, createTheme, ThemeProvider, Button, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -7,20 +7,40 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useAuth } from "../Auth/AuthProvider";
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import { Refresh } from "../Auth/Refresh"
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 
 const drawerWidth = 240;
 
 export const LayoutAdmin = () => {
-    const { currentUser, logout } = useAuth();
+
+    const currentUser = useAuth();
     const [darkMode, setDarkMode] = useState(true);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        async function fetchRefreshToken() {
+            try {
+                await currentUser.refresh();
+
+                if (!currentUser) {
+                    navigate('/sign-in');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchRefreshToken();
+    }, []);
+
+    //const {isSuccess, accessToken, refreshToken} = await Refresh();
+    
+    /*
     if (!currentUser) {
         return (<Navigate to="/sign-in" />);
-    }
+    }*/
 
     const theme = createTheme({
         palette: {
@@ -46,7 +66,7 @@ export const LayoutAdmin = () => {
     }
 
     const handleLogout = async () => {
-        await logout();
+        currentUser.signOut();
         navigate('/sign-in');
     };
 

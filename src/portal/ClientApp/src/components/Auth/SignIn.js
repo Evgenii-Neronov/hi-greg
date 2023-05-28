@@ -34,13 +34,8 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-    const auth = useAuth();
+    const currentUser = useAuth();
     const navigate = useNavigate();
-    const { currentUser } = useAuth();
-
-    if (currentUser) {
-         navigate('/');
-    }
 
     const [error, setError] = useState(null);
     const handleSubmit = async (event) => {
@@ -53,11 +48,11 @@ export function SignInSide() {
         };
 
         try {
-            const response = await axios.post('https://localhost:44439/api/Account/sign-in', formData);
+            const response = await axios.post('/api/Account/sign-in', formData);
             console.log(response.data);
 
             if (response.status === 200) {
-                auth.signIn(response.accessToken, response.refreshToken);
+                currentUser.signIn(response.data.accessToken, response.data.refreshToken);
                 navigate('/');
             } else {
                 setError('An error occurred during registration. Please try again.');
