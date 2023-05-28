@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, AppBar, Toolbar, IconButton, Typography, createTheme, ThemeProvider, Button, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Category as CategoryIcon, History as HistoryIcon } from '@mui/icons-material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -9,7 +10,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from "../Auth/AuthProvider";
 import { Navigate, useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import CateSide from "../Features/CatSide"
+import { Container } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Me from "../Auth/Me"
 
 
@@ -17,7 +19,7 @@ const drawerWidth = 240;
 const drawerMinWidth = 75;
 var isLoading = true;
 
-export const LayoutAdmin = () => {
+export const LayoutAdmin = ({ children }) => {
 
     const currentUser = useAuth();
     const [darkMode, setDarkMode] = useState(true);
@@ -124,14 +126,19 @@ export const LayoutAdmin = () => {
                     <Toolbar />
                     <Box sx={{ overflow: 'auto' }}>
                         <List>
-                            {['Categorize emails', 'Data examiner', 'Workflow assistent', 'Monitoring', 'Manage'].map((text, index) => (
-                                <ListItem button key={text} sx={{ justifyContent: 'center' }}>
-                                    <ListItemIcon sx={{ minWidth: 'auto' }}>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    {open && <ListItemText primary={text} />} 
-                                </ListItem>
-                            ))}
+                            <ListItem component={Link} to='/cat' button key='Сategorizer' sx={{ justifyContent: 'center' }}>
+                            <ListItemIcon sx={{ minWidth: 'auto' }}>
+                            <CategoryIcon />
+                            </ListItemIcon>
+                                {open && <ListItemText primary='Categorizer' />}
+                            </ListItem>
+
+                            <ListItem component={Link} to='/history' button key='History' sx={{ justifyContent: 'center' }}>
+                                <ListItemIcon sx={{ minWidth: 'auto' }}>
+                                    <HistoryIcon />
+                                </ListItemIcon>
+                                {open && <ListItemText primary='History' />}
+                            </ListItem>
                         </List>
                         <Button
                     color="inherit"
@@ -145,7 +152,7 @@ export const LayoutAdmin = () => {
                 </Drawer>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Toolbar />
-                    <CateSide />
+                    {children}
                 </Box>
             </Box>
         </ThemeProvider>

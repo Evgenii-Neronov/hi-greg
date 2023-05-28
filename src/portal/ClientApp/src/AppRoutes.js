@@ -7,6 +7,9 @@ import { SignUp } from "./components/Auth/SignUp";
 import { Layout } from "./components/Layouts/Layout";
 import { LayoutVoid } from "./components/Layouts/LayoutVoid";
 import { LayoutAdmin } from "./components/Layouts/LayoutAdmin";
+import { CatHistoryTable } from "./components/Features/CatHistory";
+import { CategoryForms } from "./components/Features/CatSide"
+
 
 const AppRoutes = [
     {
@@ -33,6 +36,16 @@ const AppRoutes = [
         path: "/sign-up",
         element: <SignUp />,
         layout: LayoutVoid
+    },
+    {
+        path: "/cat",
+        element: <CategoryForms />,
+        layout: LayoutAdmin
+    },
+    {
+        path: "/history",
+        element: <CatHistoryTable />,
+        layout: LayoutAdmin
     }
 ];
 

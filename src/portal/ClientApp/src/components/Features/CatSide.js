@@ -1,19 +1,29 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Button, TextField, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Paper, Grid, Typography, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import axios from 'axios';
 
-const CategoryForms = () => {
+export const CategoryForms = () => {
+
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState("");
     const [textInput, setTextInput] = useState("");
     const [checks, setChecks] = useState([]);
     const [userData, setUserData] = useState(null);
 
+    useEffect(() => {
+        const storedCategories = localStorage.getItem('categories');
+        if (storedCategories) {
+            setCategories(JSON.parse(storedCategories));
+        }
+    }, []);
+
     const handleAddCategory = () => {
         if (newCategory.trim() !== "") {
-            setCategories([...categories, newCategory]);
+            var newCats = [...categories, newCategory];
+            setCategories(newCats);
             setNewCategory("");
+            localStorage.setItem('categories', JSON.stringify(newCats));
         }
     };
 
@@ -21,6 +31,7 @@ const CategoryForms = () => {
         const newCategories = [...categories];
         newCategories.splice(index, 1);
         setCategories(newCategories);
+        localStorage.setItem('categories', JSON.stringify(newCategories));
     };
 
     const handleCheckCategory = async () => {
