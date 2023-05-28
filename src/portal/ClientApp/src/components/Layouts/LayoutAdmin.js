@@ -5,19 +5,32 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from "../Auth/AuthProvider";
 import { Navigate, useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import CateSide from "../Features/CatSide"
 import Me from "../Auth/Me"
 
 
 const drawerWidth = 240;
+const drawerMinWidth = 75;
+var isLoading = true;
 
 export const LayoutAdmin = () => {
 
     const currentUser = useAuth();
     const [darkMode, setDarkMode] = useState(true);
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false); 
+
+    const handleDrawerOpen = () => {  
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         async function fetchRefreshToken() {
@@ -25,17 +38,23 @@ export const LayoutAdmin = () => {
                 var res = await currentUser.refresh();
 
                 if (!res.isSuccess) {
+                    isLoading = false;
                     navigate('/sign-in');
                 }
             } catch (error) {
                 console.error(error);
+                isLoading = false;
                 navigate('/sign-in');
             }
+            isLoading = false;
         }
 
         fetchRefreshToken();
     }, []);
-    
+
+    if (currentUser.isNotLogged())
+        navigate('/sign-in');
+        
     const theme = createTheme({
         palette: {
             mode: darkMode ? 'dark' : 'light',
@@ -63,17 +82,24 @@ export const LayoutAdmin = () => {
         currentUser.signOut();
         navigate('/sign-in');
     };
+    
+
+    if (isLoading) {
+        return (<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <CircularProgress />
+                </div>); }
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{
-        height: '100vh',
-        display: 'flex', backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat', backgroundImage: 'url(background.jpg)' }}>
+                height: '100vh',
+                overflowX: 'auto',
+                display: 'flex', backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat', backgroundImage: 'url(background.jpg)' }}>
                 <CssBaseline />
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                     <Toolbar>
-                        <IconButton color="inherit" aria-label="open drawer" edge="start">
+                        <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={open ? handleDrawerClose : handleDrawerOpen}>  
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
@@ -90,20 +116,20 @@ export const LayoutAdmin = () => {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        width: drawerWidth,
+                        width: open ? drawerWidth : drawerMinWidth,  // Modify this line
                         flexShrink: 0,
-                        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                        [`& .MuiDrawer-paper`]: { width: open ? drawerWidth : drawerMinWidth, boxSizing: 'border-box' },  // Modify this line
                     }}
                 >
                     <Toolbar />
                     <Box sx={{ overflow: 'auto' }}>
                         <List>
                             {['Categorize emails', 'Data examiner', 'Workflow assistent', 'Monitoring', 'Manage'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>
+                                <ListItem button key={text} sx={{ justifyContent: 'center' }}>
+                                    <ListItemIcon sx={{ minWidth: 'auto' }}>
                                         {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    {open && <ListItemText primary={text} />} 
                                 </ListItem>
                             ))}
                         </List>
@@ -113,13 +139,13 @@ export const LayoutAdmin = () => {
                     onClick={handleLogout}
                     sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}
                     >
-                    Log Out
+                    {open && <span>Log Out</span>} 
                         </Button>
                     </Box>
                 </Drawer>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Toolbar />
-                    {/* Here goes your page content */}
+                    <CateSide />
                 </Box>
             </Box>
         </ThemeProvider>
