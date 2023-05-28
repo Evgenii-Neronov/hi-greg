@@ -68,8 +68,8 @@ export const LayoutAdmin = ({ children }) => {
                     main: '#aa68c8',
                 },
                 background: {
-                    default: '#12112b',
-                    paper: '#12112b',
+                    default: 'rgba(18, 17, 43, 0.7)',
+                    paper: 'rgba(18, 17, 43, 0.7)',
                 },
             } : {}),
         },
@@ -87,7 +87,7 @@ export const LayoutAdmin = ({ children }) => {
     
 
     if (isLoading) {
-        return (<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        return (<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: `calc(100vh - ${theme.spacing(8)}px)` }}>
                     <CircularProgress />
                 </div>); }
 

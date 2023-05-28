@@ -6,9 +6,8 @@ namespace ChatGpt.Application
 {
     public class GPT3Service : IGPT3Service
     {
-        private const string Endpoint = "https://api.openai.com/v1/engines/text-davinci-003/completions";
+        private const string Endpoint = "";
         private readonly string _openAiKey = Environment.GetEnvironmentVariable("OPEN_AI_KEY") ?? "";
-
         private readonly HttpClient _client;
         private readonly ILogger<GPT3Service> _logger;
 

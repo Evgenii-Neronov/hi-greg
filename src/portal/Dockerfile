@@ -12,6 +12,9 @@ RUN apt-get install -y nodejs
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV NODE_ENV=production
+
 RUN apt-get update
 RUN apt-get install -y curl
 RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
@@ -22,6 +25,8 @@ WORKDIR /src
 COPY ["src/portal/portal.csproj", "src/portal/"]
 COPY ["src/back/auth/auth.csproj", "src/back/auth/"]
 COPY ["src/lib/common/common.csproj", "src/lib/common/"]
+COPY ["src/back/crm-api/crm-api.csproj", "src/back/crm-api/"]
+COPY ["src/lib/chat-gpt/chat-gpt.csproj", "src/lib/chat-gpt/"]
 RUN dotnet restore "src/portal/portal.csproj"
 COPY . .
 WORKDIR "/src/src/portal"

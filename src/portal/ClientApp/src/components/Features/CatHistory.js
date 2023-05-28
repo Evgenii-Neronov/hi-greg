@@ -3,8 +3,6 @@ import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 
-const apiUrl = 'https://localhost:44439/api/cat/list';
-
 export const CatHistoryTable = () => {
     const [catHistories, setCatHistories] = useState([]);
     const [totalItems, setTotalItems] = useState(0);
@@ -14,15 +12,12 @@ export const CatHistoryTable = () => {
     useEffect(() => {
         const fetchCatHistories = async () => {
             try {
-                const response = await axios.get(apiUrl, {
+                const response = await axios.get('/api/cat/list', {
                     params: {
                         currentPage: currentPage,
                         pageSize: pageSize
                     },
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-                        'Accept': 'application/json'
-                    }
+                    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
                 });
 
                 setCatHistories(response.data.items);
@@ -34,7 +29,7 @@ export const CatHistoryTable = () => {
 
         fetchCatHistories();
 
-        const interval = setInterval(fetchCatHistories, 1000);
+        const interval = setInterval(fetchCatHistories, 5000);
 
         return () => {
             clearInterval(interval);
@@ -47,7 +42,7 @@ export const CatHistoryTable = () => {
 
     return (
         <div>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ p: '7px' }}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -56,7 +51,6 @@ export const CatHistoryTable = () => {
                             <TableCell>Created Date</TableCell>
                             <TableCell>Request</TableCell>
                             <TableCell>Response</TableCell>
-                            <TableCell>Answer</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -67,14 +61,13 @@ export const CatHistoryTable = () => {
                                 <TableCell>{catHistory.createdDate}</TableCell>
                                 <TableCell>{catHistory.request}</TableCell>
                                 <TableCell>{catHistory.response}</TableCell>
-                                <TableCell>{catHistory.answer}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
 
-            <Pagination
+            <Pagination sx={{ p: '7px' }}
                 count={Math.ceil(totalItems / pageSize)}
                 page={currentPage}
                 onChange={handlePageChange}

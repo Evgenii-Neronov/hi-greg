@@ -32,9 +32,6 @@ export const AuthProvider = ({ children }) => {
 
         try {
             const response = await axios.post('/api/auth/refresh-token', null, {
-                headers: {
-                    'Accept': '*/*',
-                },
                 params: {
                     refreshToken: refreshToken,
                 },

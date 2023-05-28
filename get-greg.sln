@@ -48,7 +48,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B668
 		scripts\dalai-ubuntu-scripts.txt = scripts\dalai-ubuntu-scripts.txt
 		scripts\delete comments.ps1 = scripts\delete comments.ps1
 		scripts\install-env.ps1 = scripts\install-env.ps1
-		scripts\New Text Document.txt = scripts\New Text Document.txt
 	EndProjectSection
 EndProject
 Global

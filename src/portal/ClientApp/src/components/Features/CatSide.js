@@ -60,7 +60,7 @@ export const CategoryForms = () => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh', gap: '10px' }}>
             <Box sx={{ flexBasis: '30%', height: '100%' }}>
-                <Paper sx={{ p: 2, bgcolor: '#333366', color: '#fff' }}>
+                <Paper sx={{ p: 2 }}>
                     <Typography variant="h6">Category</Typography>
                     <TextField
                         fullWidth
@@ -72,7 +72,7 @@ export const CategoryForms = () => {
                             style: { color: '#fff' },
                         }}
                     />
-                    <Button variant="contained" color="primary" onClick={handleAddCategory}>Add category</Button>
+                    <Button variant="contained" color="primary" onClick={handleAddCategory}>Add</Button>
                     <List>
                         {categories.map((category, index) => (
                             <ListItem key={index} sx={{ color: '#fff' }}>
@@ -91,7 +91,7 @@ export const CategoryForms = () => {
             <Box sx={{ flexBasis: '70%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <Box sx={{ flexGrow: '50%' }}>
                     <Box sx={{ flexBasis: '25%' }}>
-                        <Paper sx={{ p: 2, bgcolor: '#333366', color: '#fff' }}>
+                        <Paper sx={{ p: 2 }}>
                             <Typography variant="h6">Text</Typography>
                             <TextField
                                 fullWidth
@@ -111,7 +111,7 @@ export const CategoryForms = () => {
                 </Box>
 
                 <Box sx={{ flexBasis: '50%' }}>
-                    <Paper sx={{ p: 2, bgcolor: '#333366', color: '#fff' }}>
+                    <Paper sx={{ p: 2 }}>
                         <Typography variant="h6">History</Typography>
                         <TableContainer>
                             <Table>
