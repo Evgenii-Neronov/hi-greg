@@ -23,7 +23,7 @@ builder.Services.AddScoped<IGPT3Service, GPT3Service>();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "neu-api", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "neu-api", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme",
@@ -53,7 +53,8 @@ builder.Services.AddSwaggerGen(c =>
 
 
 var jwtSettingsSection = configuration.GetSection("JwtSettings");
-var jwtKey = Environment.GetEnvironmentVariable("AUTH_KEY") ?? "MySecretKey123!MySecretKey123!MySecretKey123!MySecretKey123!";
+var jwtKey = Environment.GetEnvironmentVariable("AUTH_KEY") ??
+             "MySecretKey123!MySecretKey123!MySecretKey123!MySecretKey123!";
 var jwtIssuer = jwtSettingsSection["Issuer"];
 
 
@@ -100,8 +101,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    "default",
+    "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
 

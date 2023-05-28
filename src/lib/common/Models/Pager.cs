@@ -1,22 +1,19 @@
 ﻿namespace common.Models;
+
 public class Pager<T>
 {
-    private int pageSize;
-    private int currentPage;
-    private int totalItems;
-
     public Pager(int currentPage, int totalItems, int pageSize)
     {
-        this.currentPage = currentPage;
-        this.totalItems = totalItems;
-        this.pageSize = pageSize;
+        CurrentPage = currentPage;
+        TotalItems = totalItems;
+        PageSize = pageSize;
     }
 
-    public int PageSize => pageSize;
+    public int PageSize { get; }
 
-    public int CurrentPage => currentPage;
+    public int CurrentPage { get; }
 
-    public int TotalItems => totalItems;
+    public int TotalItems { get; }
 
     public int TotalPages => (int)Math.Ceiling((double)TotalItems / PageSize);
 
