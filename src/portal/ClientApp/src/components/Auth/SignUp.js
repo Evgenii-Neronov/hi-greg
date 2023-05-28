@@ -84,7 +84,8 @@ export function SignUp() {
             console.log(response.data); 
             
             if (response.status === 200) {
-                currentUser.signIn(response.accessToken, response.refreshToken);
+                currentUser.signUp(formData.email, formData.password);
+                currentUser.signIn(formData.email, formData.password);
                 navigate('/');
             } else {
                 setError('An error occurred during registration. Please try again.');

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using portal.Models;
 using System.Security.Claims;
 using portal.Models.Auth;
+using portal.Infrastructure;
 
 namespace Controllers
 {
@@ -113,7 +114,7 @@ namespace Controllers
         }
 
         [HttpGet("me")]
-        [Authorize]
+        [FirebaseAuthentication]
         public async Task<IActionResult> Me()
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

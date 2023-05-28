@@ -1,6 +1,6 @@
 import React from "react";
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -9,74 +9,48 @@ export const useAuth = () => React.useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
         const [currentUser, setCurrentUser] = React.useState(null);
 
-        const signIn = (accessToken, refreshToken) => {
-            Cookies.set('access_token', accessToken, { expires: 7, secure: true });
-            Cookies.set('refresh_token', refreshToken, { expires: 7, secure: true });
-            setCurrentUser({ accessToken, refreshToken });
-        };
-
-        const signOut = () => {
-            Cookies.remove('access_token');
-            Cookies.remove('refresh_token');
-            setCurrentUser(null);
-        };
-
-        const isNotLogged = () => 'undefined' == Cookies.get('refresh_token');
-
-        const refresh = async () => {
-            const refreshToken = Cookies.get('refresh_token');
-
-            if (refreshToken == 'undefined') {
-                console.error("No Refresh token available");
-                setCurrentUser(null);
-            }
-
+        const signIn = async (email, password) => {
             try {
-                const response = await axios.post('/api/auth/refresh-token', null, {
-                    headers: {
-                        'Accept': '*/*',
-                    },
-                    params: {
-                        refreshToken: refreshToken,
-                    },
-                });
-
-                if (response.status === 200) {
-                    const { accessToken, refreshToken } = response.data;
-
-                    Cookies.set('access_token', accessToken, { expires: 7, secure: true });
-                    Cookies.set('refresh_token', refreshToken, { expires: 7, secure: true });
-
-                    setCurrentUser({ accessToken, refreshToken });
-                    return {
-                        isSuccess: true,
-                        accessToken,
-                        refreshToken,
-                    };
-                }
-
-                console.error("Failed to Refresh tokens");
-                return {
-                    isSuccess: false,
-                    accessToken: null,
-                    refreshToken: null,
-                };
+                await firebase.auth().signInWithEmailAndPassword(email, password);
+                const user = firebase.auth().currentUser;
+                setCurrentUser(user);
             } catch (error) {
                 console.error(error);
-                setCurrentUser(null);
             }
-        }
+        };
+
+        const signOut = async () => {
+            try {
+                await firebase.auth().signOut();
+                setCurrentUser(null);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const signUp = async (email, password) => {
+            try {
+                await firebase.auth().createUserWithEmailAndPassword(email, password);
+                const user = firebase.auth().currentUser;
+                setCurrentUser(user);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const isNotLogged = () => !firebase.auth().currentUser;
 
         React.useEffect(() => {
-            const accessToken = Cookies.get('access_token');
-            const refreshToken = Cookies.get('refresh_token');
-            if (accessToken && refreshToken) {
-                setCurrentUser({ accessToken, refreshToken });
-            }
+            const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+                setCurrentUser(user);
+            });
+
+            // Cleanup subscription on unmount
+            return () => unsubscribe();
         }, []);
 
         return (
-            <AuthContext.Provider value={{ currentUser, signIn, signOut, refresh, isNotLogged }}>
+            <AuthContext.Provider value={{ currentUser, signIn, signOut, signUp, isNotLogged }}>
     {children}
     </AuthContext.Provider>
 );

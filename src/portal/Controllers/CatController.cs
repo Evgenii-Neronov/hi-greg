@@ -1,6 +1,7 @@
 ﻿using ChatGpt.Application;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using portal.Infrastructure;
 using portal.Models.Cat;
 
 namespace portal.Controllers;
@@ -18,7 +19,7 @@ public class CatController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [FirebaseAuthentication]
     public async Task<CatResponse> Cat([FromQuery] CatRequest request)
     {
         var cats = request.cats.Select(x => $"\"{x}\"");
