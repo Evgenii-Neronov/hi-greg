@@ -14,6 +14,7 @@ import Me from "../Auth/Me"
 
 
 const drawerWidth = 240;
+const drawerMinWidth = 75;
 var isLoading = true;
 
 export const LayoutAdmin = () => {
@@ -21,6 +22,15 @@ export const LayoutAdmin = () => {
     const currentUser = useAuth();
     const [darkMode, setDarkMode] = useState(true);
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false); 
+
+    const handleDrawerOpen = () => {  
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         async function fetchRefreshToken() {
@@ -82,13 +92,14 @@ export const LayoutAdmin = () => {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{
-        height: '100vh',
-        display: 'flex', backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat', backgroundImage: 'url(background.jpg)' }}>
+                height: '100vh',
+                overflowX: 'auto',
+                display: 'flex', backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat', backgroundImage: 'url(background.jpg)' }}>
                 <CssBaseline />
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                     <Toolbar>
-                        <IconButton color="inherit" aria-label="open drawer" edge="start">
+                        <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={open ? handleDrawerClose : handleDrawerOpen}>  
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
@@ -105,20 +116,20 @@ export const LayoutAdmin = () => {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        width: drawerWidth,
+                        width: open ? drawerWidth : drawerMinWidth,  // Modify this line
                         flexShrink: 0,
-                        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                        [`& .MuiDrawer-paper`]: { width: open ? drawerWidth : drawerMinWidth, boxSizing: 'border-box' },  // Modify this line
                     }}
                 >
                     <Toolbar />
                     <Box sx={{ overflow: 'auto' }}>
                         <List>
                             {['Categorize emails', 'Data examiner', 'Workflow assistent', 'Monitoring', 'Manage'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemIcon>
+                                <ListItem button key={text} sx={{ justifyContent: 'center' }}>
+                                    <ListItemIcon sx={{ minWidth: 'auto' }}>
                                         {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    {open && <ListItemText primary={text} />} 
                                 </ListItem>
                             ))}
                         </List>
@@ -128,7 +139,7 @@ export const LayoutAdmin = () => {
                     onClick={handleLogout}
                     sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}
                     >
-                    Log Out
+                    {open && <span>Log Out</span>} 
                         </Button>
                     </Box>
                 </Drawer>

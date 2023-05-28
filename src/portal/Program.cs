@@ -12,8 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("AuthConnection")));
+
+builder.Services.AddDbContext<CrmDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("CrmConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IGPT3Service, GPT3Service>();

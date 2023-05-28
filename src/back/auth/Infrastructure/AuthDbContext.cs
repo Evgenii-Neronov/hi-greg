@@ -1,9 +1,9 @@
 ﻿using auth.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : DbContext
+public class AuthDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
     }

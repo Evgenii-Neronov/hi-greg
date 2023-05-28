@@ -14,11 +14,11 @@ namespace Controllers
     [Route("api/auth/")]
     public class AuthController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AuthDbContext _context;
         private readonly PasswordHasher<User> _passwordHasher;
         private readonly IConfiguration _configuration;
 
-        public AuthController(ApplicationDbContext context, IConfiguration configuration)
+        public AuthController(AuthDbContext context, IConfiguration configuration)
         {
             _context = context;
             _passwordHasher = new PasswordHasher<User>();

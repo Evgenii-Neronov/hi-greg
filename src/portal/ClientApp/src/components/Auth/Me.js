@@ -7,9 +7,10 @@ const Me = () => {
   useEffect(() => {
       const fetchUserData = async () => {
           
-        try {
-            const response = await axios.get('/api/auth/me', {
-                headers: { Authorization: `Bearer ${localStorage.getItem('refresh_token')}` }
+          try {
+                    var accessToken = localStorage.getItem('access_token');
+                    const response = await axios.get('/api/auth/me', {
+                    headers: { Authorization: `Bearer ${accessToken}` }
             });
 
         setUserData(response.data);

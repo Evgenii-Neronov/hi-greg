@@ -31,7 +31,7 @@ const CategoryForms = () => {
                 cats.map(cat => `&cats=${encodeURIComponent(cat)}`).join('');
 
             const response = await axios.get(`/api/cat?${queryString}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('refresh_token')}` }
+                headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
             });
             
             const check = {
