@@ -34,7 +34,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\back\auth\auth.csproj" />
+    <ProjectReference Include="..\lib\chat-gpt\chat-gpt.csproj" />
     <ProjectReference Include="..\lib\common\common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\components\Features\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -10,7 +10,7 @@ public static class JwtHelper
 {
     public static (string, string) GenerateJwtTokens(this User user, IConfiguration configuration)
     {
-        var jwtKey = Environment.GetEnvironmentVariable("AUTH_KEY") ?? "no key"; //!
+        var jwtKey = /*Environment.GetEnvironmentVariable("AUTH_KEY") ??*/ "MySecretKey123!MySecretKey123!MySecretKey123!MySecretKey123!"; //!
         var jwtExpireDays =  7; // configuration.GetValue<int>("JwtExpireDays");
         var jwtIssuer = "https://get-greg.com"; // configuration.GetValue<string>("JwtIssuer");
 

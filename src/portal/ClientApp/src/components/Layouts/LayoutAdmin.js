@@ -5,13 +5,16 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from "../Auth/AuthProvider";
 import { Navigate, useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import CateSide from "../Features/CatSide"
 import Me from "../Auth/Me"
 
 
 const drawerWidth = 240;
+var isLoading = true;
 
 export const LayoutAdmin = () => {
 
@@ -25,17 +28,23 @@ export const LayoutAdmin = () => {
                 var res = await currentUser.refresh();
 
                 if (!res.isSuccess) {
+                    isLoading = false;
                     navigate('/sign-in');
                 }
             } catch (error) {
                 console.error(error);
+                isLoading = false;
                 navigate('/sign-in');
             }
+            isLoading = false;
         }
 
         fetchRefreshToken();
     }, []);
-    
+
+    if (currentUser.isNotLogged())
+        navigate('/sign-in');
+        
     const theme = createTheme({
         palette: {
             mode: darkMode ? 'dark' : 'light',
@@ -63,6 +72,12 @@ export const LayoutAdmin = () => {
         currentUser.signOut();
         navigate('/sign-in');
     };
+    
+
+    if (isLoading) {
+        return (<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <CircularProgress />
+                </div>); }
 
     return (
         <ThemeProvider theme={theme}>
@@ -119,7 +134,7 @@ export const LayoutAdmin = () => {
                 </Drawer>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Toolbar />
-                    {/* Here goes your page content */}
+                    <CateSide />
                 </Box>
             </Box>
         </ThemeProvider>

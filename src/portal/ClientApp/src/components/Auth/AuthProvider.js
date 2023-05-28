@@ -21,6 +21,8 @@ export const AuthProvider = ({ children }) => {
             setCurrentUser(null);
         };
 
+        const isNotLogged = () => 'undefined' == Cookies.get('refresh_token');
+
         const refresh = async () => {
             const refreshToken = Cookies.get('refresh_token');
 
@@ -74,7 +76,7 @@ export const AuthProvider = ({ children }) => {
         }, []);
 
         return (
-            <AuthContext.Provider value={{ currentUser, signIn, signOut, refresh }}>
+            <AuthContext.Provider value={{ currentUser, signIn, signOut, refresh, isNotLogged }}>
     {children}
     </AuthContext.Provider>
 );

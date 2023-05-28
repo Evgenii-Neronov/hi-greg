@@ -6,18 +6,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using portal.Models;
 using System.Security.Claims;
+using portal.Models.Auth;
 
 namespace Controllers
 {
     [ApiController]
     [Route("api/auth/")]
-    public class AccountController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly PasswordHasher<User> _passwordHasher;
         private readonly IConfiguration _configuration;
 
-        public AccountController(ApplicationDbContext context, IConfiguration configuration)
+        public AuthController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
             _passwordHasher = new PasswordHasher<User>();

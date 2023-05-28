@@ -1,4 +1,5 @@
 using System.Text;
+using ChatGpt.Application;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IGPT3Service, GPT3Service>();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "YourAppName", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "neu-api", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme",
@@ -48,7 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 var jwtSettingsSection = configuration.GetSection("JwtSettings");
-var jwtKey = Environment.GetEnvironmentVariable("AUTH_KEY") ?? "MySecretKey123!";
+var jwtKey = Environment.GetEnvironmentVariable("AUTH_KEY") ?? "MySecretKey123!MySecretKey123!MySecretKey123!MySecretKey123!";
 var jwtIssuer = jwtSettingsSection["Issuer"];
 
 
@@ -86,7 +88,6 @@ if (app.Environment.IsDevelopment() || true) // !
 
 if (!app.Environment.IsDevelopment())
 {
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     //app.UseHsts();
 }
 
