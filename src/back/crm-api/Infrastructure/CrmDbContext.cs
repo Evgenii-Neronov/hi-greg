@@ -7,6 +7,6 @@ public class CrmDbContext : DbContext
         : base(options)
     {
     }
-    
+
     public DbSet<CatHistory> CatHistory { get; set; }
 }

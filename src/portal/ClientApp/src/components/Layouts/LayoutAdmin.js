@@ -15,8 +15,8 @@ import { Link } from 'react-router-dom';
 import Me from "../Auth/Me"
 
 
-const drawerWidth = 240;
-const drawerMinWidth = 75;
+const drawerWidth = 165;
+const drawerMinWidth = 70;
 var isLoading = true;
 
 export const LayoutAdmin = ({ children }) => {
@@ -130,14 +130,14 @@ export const LayoutAdmin = ({ children }) => {
                             <ListItemIcon sx={{ minWidth: 'auto' }}>
                             <CategoryIcon />
                             </ListItemIcon>
-                                {open && <ListItemText primary='Categorizer' />}
+                                {open && <ListItemText primary='Categorizer' sx={{ paddingLeft: 1, alignItems: 'center' }} />}
                             </ListItem>
 
                             <ListItem component={Link} to='/history' button key='History' sx={{ justifyContent: 'center' }}>
                                 <ListItemIcon sx={{ minWidth: 'auto' }}>
                                     <HistoryIcon />
                                 </ListItemIcon>
-                                {open && <ListItemText primary='History' />}
+                                {open && <ListItemText primary='History' sx={{ paddingLeft: 1, alignItems: 'center' }} />}
                             </ListItem>
                         </List>
                         <Button

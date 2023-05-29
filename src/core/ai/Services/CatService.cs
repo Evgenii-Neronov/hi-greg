@@ -7,6 +7,7 @@ public class CatService : Categorizer.CategorizerBase
 {
     private readonly IGPT3Service _GPT3Service;
     private readonly ILogger<CatService> _logger;
+
     public CatService(ILogger<CatService> logger, IGPT3Service gpt3Service)
     {
         _logger = logger;

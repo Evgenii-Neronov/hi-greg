@@ -58,7 +58,7 @@ export const CategoryForms = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh', gap: '10px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', height: '90vh', gap: '10px' }}>
             <Box sx={{ flexBasis: '30%', height: '100%' }}>
                 <Paper sx={{ p: 2 }}>
                     <Typography variant="h6">Category</Typography>
