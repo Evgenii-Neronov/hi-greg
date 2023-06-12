@@ -1,51 +1,70 @@
-from flask import Flask, request
-from flask_restful import Resource, Api
-from flask_swagger_ui import get_swaggerui_blueprint
 import os
+from flask import Flask, request, jsonify
+from flasgger import Swagger
+from werkzeug.utils import secure_filename
 
-# Импорт других нужных библиотек и классов
+# Импорт классов из библиотеки langchain, примечание: эти библиотеки должны быть установлены в вашем окружении
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.chains.question_answering import load_qa_chain
+from langchain.llms import OpenAI
+from langchain.chains import ConversationalRetrievalChain
 
+#os.environ["OPENAI_API_KEY"] = ""
 app = Flask(__name__)
-api = Api(app)
+swagger = Swagger(app)
 
-SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
-API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
+@app.route('/api/query', methods=['POST'])
+def answer_query():
+    """
+    Answer a question based on a document
+    This endpoint accepts a file and a question and returns an answer based on the content of the file.
+    ---
+    parameters:
+      - name: document
+        in: formData
+        type: file
+        required: true
+      - name: question
+        in: formData
+        type: string
+        required: true
+    responses:
+      200:
+        description: Answer successfully generated
+        schema:
+          type: object
+          properties:
+            answer:
+              type: string
+              description: The answer to the question
+    """
+    # Сохраняем файл и вопрос
+    file = request.files['document']
+    question = request.form.get('question')
 
-# Call factory function to create our blueprint
-swaggerui_blueprint = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={  # Swagger UI config overrides
-        'app_name': "Python Flask RESTful API with Swagger UI"
-    },
-)
+    # Загрузите и разбейте PDF
+    file_path = secure_filename(file.filename)
+    file.save(file_path)
+    loader = PyPDFLoader(file_path)
+    pages = loader.load_and_split()
+    chunks = pages
 
-app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+    # Создайте векторное пространство для хранения эмбеддингов документов
+    embeddings = OpenAIEmbeddings()
+    db = FAISS.from_documents(chunks, embeddings)
 
+    # Создайте объекты для генерации ответа на вопрос
+    qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.1), db.as_retriever())
+    chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
 
-class QueryAPI(Resource):
-    def post(self):
-        file = request.files['document']
-        question = request.form['question']
+    # Получите документы, похожие на вопрос, и сгенерируйте ответ на вопрос
+    docs = db.similarity_search(question)
+    response = chain.run(input_documents=docs, question=question)
 
-        os.environ["OPENAI_API_KEY"] = ""
+    return jsonify(response)
 
-        # Load and split the document
-        loader = PyPDFLoader(file.read())
-        chunks = loader.load_and_split()
-
-        embeddings = OpenAIEmbeddings()
-        db = FAISS.from_documents(chunks, embeddings)
-
-        qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.1), db.as_retriever())
-        chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
-
-        docs = db.similarity_search(question)
-
-        return {'answer': chain.run(input_documents=docs, question=question)}
-
-
-api.add_resource(QueryAPI, '/api/query')
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
