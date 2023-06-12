@@ -3,3 +3,14 @@
 **/bin/
 **/obj/
 **/out/
+***/obj/
+/src/back/auth/obj/Debug/net7.0/auth.GeneratedMSBuildEditorConfig.editorconfig
+/src/back/feature/obj/Debug/net7.0/feature.GeneratedMSBuildEditorConfig.editorconfig
+/src/back/fullfiller/obj/Debug/net7.0/fullfiller.GeneratedMSBuildEditorConfig.editorconfig
+/src/base/assistance-bot/obj/Debug/net7.0/assistance-bot.GeneratedMSBuildEditorConfig.editorconfig
+/src/base/emailer/obj/Debug/net7.0/emailer.GeneratedMSBuildEditorConfig.editorconfig
+/src/core/ai/obj/Debug/net7.0/ai.GeneratedMSBuildEditorConfig.editorconfig
+/src/lib/common/obj/Debug/net7.0/common.GeneratedMSBuildEditorConfig.editorconfig
+/src/lib/chat-gpt/obj/Debug/net7.0/chat-gpt.GeneratedMSBuildEditorConfig.editorconfig
+**/.idea/
+*.idea*
